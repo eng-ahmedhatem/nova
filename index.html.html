@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RANova Arte Jazeera — Contracting, Finishing & Interior Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syncopate:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ═══════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E4C97A;
+  --gold-dim: #8B6E2C;
+  --gold-pale: #F2E5BC;
+  --ink: #0A0A09;
+  --ink2: #111110;
+  --forest: #0D1F14;
+  --forest2: #152A1C;
+  --cream: #F5F0E8;
+  --warm-white: #FAF7F2;
+  --muted: #6B6456;
+  --border: rgba(201,168,76,0.2);
+  --easing: cubic-bezier(0.25,0.46,0.45,0.94);
+}
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  cursor: none;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+a { text-decoration: none; color: inherit; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+#cursor {
+  position: fixed; z-index: 9999;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+#cursor-ring {
+  position: fixed; z-index: 9998;
+  width: 40px; height: 40px;
+  border: 1px solid rgba(201,168,76,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: transform 0.18s var(--easing), width 0.4s, height 0.4s, opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 2rem;
+  padding: 1.5rem 4rem;
+  transition: background 0.5s, padding 0.4s, backdrop-filter 0.5s;
+}
+#nav.solid {
+  background: rgba(10,10,9,0.94);
+  backdrop-filter: blur(16px);
+  padding: 0.9rem 4rem;
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo img {
+  height: 52px;
+  filter: drop-shadow(0 2px 12px rgba(201,168,76,0.35));
+  transition: height 0.3s;
+      width: 50px;
+    object-fit: contain;
+    height: 50px;
+
+}
+#nav.solid .nav-logo img { height: 40px; }
+.nav-links {
+  display: flex; justify-content: center;
+  list-style: none; gap: 3rem;
+}
+.nav-links a {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(245,240,232,0.7);
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s var(--easing);
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-contact {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--gold-dim); color: var(--gold-light);
+  padding: 0.6rem 1.5rem; transition: all 0.3s;
+}
+.nav-contact:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.nav-burger { display: none; flex-direction: column; gap: 5px; cursor: none; }
+.nav-burger span { width: 22px; height: 1px; background: var(--gold-light); transition: 0.3s; }
+
+/* ═══════════════════════════════════════════
+   MOBILE OVERLAY
+═══════════════════════════════════════════ */
+#mob-menu {
+  position: fixed; inset: 0; z-index: 990;
+  background: var(--ink); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2.5rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s;
+}
+#mob-menu.open { opacity: 1; pointer-events: all; }
+#mob-menu a {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem,6vw,3.5rem); color: var(--cream);
+  transition: color 0.3s;
+}
+#mob-menu a:hover { color: var(--gold-light); }
+#mob-close {
+  position: absolute; top: 2rem; right: 3rem;
+  font-size: 1.5rem; color: var(--gold); cursor: none;
+  background: none; border: none;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  position: relative; height: 100vh; min-height: 650px;
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.hero-media {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-media video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero-media .fallback {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80') center/cover;
+  display: none;
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,9,0.35) 0%, rgba(10,10,9,0.5) 50%, rgba(10,10,9,0.8) 100%);
+}
+.hero-overlay-left {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to right, rgba(13,31,20,0.6) 0%, transparent 60%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 0 2rem;
+}
+.hero-eyebrow {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.9s 0.3s var(--easing) forwards;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(3.2rem, 8vw, 8rem);
+  line-height: 1.02; color: var(--cream);
+  margin-bottom: 1.8rem;
+  opacity: 0; transform: translateY(30px);
+  animation: fadeUp 1s 0.55s var(--easing) forwards;
+}
+.hero-title em {
+  font-style: italic; color: var(--gold-light);
+}
+.hero-sub {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: rgba(245,240,232,0.8); letter-spacing: 0.03em;
+  margin-bottom: 3rem; max-width: 520px; margin-left: auto; margin-right: auto;
+  line-height: 1.8;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.9s 0.8s var(--easing) forwards;
+}
+.hero-ctas {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s 1s var(--easing) forwards;
+}
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--gold);
+  color: var(--ink); padding: 1rem 2.5rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  transition: all 0.3s; border: 1px solid var(--gold);
+}
+.cta-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.3); }
+.cta-secondary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: transparent; color: var(--cream);
+  padding: 1rem 2.5rem; border: 1px solid rgba(245,240,232,0.35);
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: all 0.3s;
+}
+.cta-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  opacity: 0; animation: fadeIn 1s 1.5s forwards;
+}
+.hero-scroll span {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.25em; color: var(--gold-dim);
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--gold-dim), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+.hero-founded {
+  position: absolute; bottom: 2.5rem; right: 4rem; z-index: 2;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.18em; color: var(--gold-dim);
+  opacity: 0; animation: fadeIn 1s 1.5s forwards;
+}
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ═══════════════════════════════════════════
+   TICKER / MARQUEE
+═══════════════════════════════════════════ */
+.ticker {
+  background: var(--gold); overflow: hidden;
+  padding: 0.9rem 0; white-space: nowrap;
+  border-top: 1px solid var(--gold-dim);
+  border-bottom: 1px solid var(--gold-dim);
+}
+.ticker-inner {
+  display: inline-flex; gap: 0;
+  animation: ticker 25s linear infinite;
+}
+.ticker-item {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--ink); font-weight: 700;
+  padding: 0 3rem;
+  display: flex; align-items: center; gap: 3rem;
+}
+.ticker-item::after {
+  content: '◆'; font-size: 0.55rem; color: rgba(10,10,9,0.5);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION UTILITIES
+═══════════════════════════════════════════ */
+section { position: relative; z-index: 1; }
+.wrap { max-width: 1340px; margin: 0 auto; padding: 0 4rem; }
+.section-label {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.section-label::before {
+  content: ''; width: 40px; height: 1px; background: var(--gold-dim);
+}
+h2.section-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1.08; color: var(--cream);
+}
+h2.section-heading em { font-style: italic; color: var(--gold-light); }
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about {
+  background: var(--ink2);
+  padding: 9rem 0;
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+  padding-bottom: 11rem;
+}
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; align-items: stretch;
+}
+.about-image-col {
+  position: relative; overflow: hidden;
+  min-height: 600px;
+}
+.about-image-col img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.85);
+  transition: transform 0.8s var(--easing);
+}
+.about-image-col:hover img { transform: scale(1.04); }
+.about-image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--ink2) 100%);
+}
+.about-year-badge {
+  position: absolute; top: 2.5rem; left: 2.5rem;
+  background: rgba(10,10,9,0.85); backdrop-filter: blur(8px);
+  border: 1px solid var(--border); padding: 1rem 1.5rem;
+}
+.about-year-badge .year {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem; color: var(--gold-light); line-height: 1;
+}
+.about-year-badge .year-label {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.18em; color: var(--muted);
+}
+.about-text-col {
+  padding: 5rem 4rem 5rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--ink2);
+}
+.about-text-col p {
+  font-size: 1rem; line-height: 1.95; color: rgba(245,240,232,0.72);
+  margin-bottom: 1.2rem;
+}
+.about-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 2rem 0;
+}
+.about-stats-row {
+  display: flex; gap: 3rem; margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.stat { }
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem; color: var(--gold);
+  line-height: 1; display: flex; align-items: flex-start;
+}
+.stat-num sup {
+  font-size: 1.2rem; margin-top: 0.3rem; margin-left: 2px;
+  color: var(--gold-dim);
+}
+.stat-txt {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.4rem;
+}
+
+/* ═══════════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════════ */
+#services {
+  padding: 8rem 0;
+  background: var(--forest);
+  margin-top: -2px;
+}
+.services-top {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 5rem;
+}
+.services-top-right {
+  max-width: 380px;
+  font-size: 0.95rem; color: rgba(245,240,232,0.65); line-height: 1.8;
+}
+.services-list { display: flex; flex-direction: column; }
+.service-row {
+  display: grid; grid-template-columns: 80px 1fr 60px;
+  align-items: center; gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: none; position: relative; overflow: hidden;
+  transition: background 0.4s;
+  text-decoration: none; color: inherit;
+}
+.service-row:first-child { border-top: 1px solid var(--border); }
+.service-row::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--forest2) 0%, rgba(21,42,28,0.6) 100%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.service-row:hover::before { opacity: 1; }
+.service-row-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem; color: var(--gold-dim);
+  position: relative; z-index: 1;
+  transition: color 0.3s;
+}
+.service-row:hover .service-row-num { color: var(--gold); }
+.service-row-main { position: relative; z-index: 1; }
+.service-row-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--cream); line-height: 1.1;
+  transition: color 0.3s, transform 0.4s;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.service-row:hover .service-row-name { color: var(--gold-light); transform: translateX(12px); }
+.service-row-tag {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem; letter-spacing: 0.05em;
+  color: var(--gold-dim); margin-top: 0.4rem;
+}
+.service-row-arrow {
+  font-size: 1.4rem; color: var(--gold-dim);
+  position: relative; z-index: 1;
+  transition: color 0.3s, transform 0.4s;
+  text-align: right;
+}
+.service-row:hover .service-row-arrow {
+  color: var(--gold); transform: translateX(6px);
+}
+
+/* ═══════════════════════════════════════════
+   SERVICE FULL PAGE (replaces drawer)
+═══════════════════════════════════════════ */
+#service-page {
+  position: fixed; inset: 0; z-index: 3000;
+  background: var(--ink);
+  transform: translateX(100%);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+#service-page.open {
+  transform: translateX(0);
+}
+.sp-header {
+  position: sticky; top: 0;
+  background: rgba(10,10,9,0.95);
+  backdrop-filter: blur(16px);
+  padding: 1.2rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+.sp-back {
+  display: flex; align-items: center; gap: 0.8rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.15em;
+  color: var(--gold); cursor: none;
+  background: none; border: none;
+  transition: gap 0.3s;
+}
+.sp-back:hover { gap: 1.2rem; }
+.sp-back-arrow { font-size: 1.1rem; }
+.sp-breadcrumb {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.sp-close {
+  background: none; border: 1px solid var(--border);
+  color: var(--gold); cursor: none;
+  width: 46px; height: 46px;
+  font-size: 1.3rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+}
+.sp-close:hover { background: var(--gold); color: var(--ink); }
+.sp-hero {
+  position: relative; height: 55vh; min-height: 400px;
+  overflow: hidden;
+}
+.sp-hero img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s var(--easing);
+}
+.sp-hero:hover img { transform: scale(1.04); }
+.sp-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,9,0.15) 0%, rgba(10,10,9,0.75) 100%);
+}
+.sp-hero-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 3rem 4rem;
+}
+.sp-num {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.3em;
+  color: var(--gold); margin-bottom: 0.8rem;
+}
+.sp-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--cream); line-height: 1.1;
+}
+.sp-body {
+  max-width: 1100px; margin: 0 auto;
+  padding: 5rem 4rem;
+}
+.sp-desc {
+  font-size: 1.05rem; line-height: 1.9;
+  color: rgba(245,240,232,0.72);
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+}
+.sp-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 3rem 0;
+}
+.sp-features-title {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.25em;
+  color: var(--gold); margin-bottom: 2rem;
+}
+.sp-features {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; list-style: none;
+}
+.sp-features li {
+  display: flex; align-items: flex-start; gap: 1.2rem;
+  padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+  font-size: 0.95rem; color: rgba(245,240,232,0.78);
+  line-height: 1.5;
+}
+.sp-features li:nth-child(odd) { padding-right: 3rem; }
+.sp-features li::before {
+  content: '◈'; color: var(--gold); font-size: 0.7rem;
+  flex-shrink: 0; margin-top: 0.2rem;
+}
+.sp-cta-row {
+  display: flex; align-items: center; gap: 2rem;
+  margin-top: 4rem; padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+.sp-cta-text {
+  font-size: 1rem; color: var(--muted); line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════════ */
+#projects {
+  padding: 8rem 0;
+  background: var(--ink);
+}
+.projects-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 3rem;
+}
+.projects-filter {
+  display: flex; gap: 0;
+  border: 1px solid var(--border);
+}
+.pf-btn {
+  background: none; border: none; border-right: 1px solid var(--border);
+  color: rgba(245,240,232,0.6);
+  padding: 0.65rem 1.5rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: none; transition: all 0.3s;
+}
+.pf-btn:last-child { border-right: none; }
+.pf-btn.active, .pf-btn:hover {
+  background: var(--gold); color: var(--ink);
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 260px;
+  gap: 4px;
+}
+.pcard {
+  position: relative; overflow: hidden; cursor: none;
+}
+.pcard:nth-child(1) { grid-column: span 8; grid-row: span 2; }
+.pcard:nth-child(2) { grid-column: span 4; }
+.pcard:nth-child(3) { grid-column: span 4; }
+.pcard:nth-child(4) { grid-column: span 5; }
+.pcard:nth-child(5) { grid-column: span 4; }
+.pcard:nth-child(6) { grid-column: span 3; }
+.pcard img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s var(--easing);
+  filter: brightness(0.75);
+}
+.pcard:hover img { transform: scale(1.08); filter: brightness(0.6); }
+.pcard-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,9,0.9) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.pcard:hover .pcard-overlay { opacity: 1; }
+.pcard-info {
+  position: absolute; bottom: 0; left: 0; padding: 2rem;
+  transform: translateY(10px); opacity: 0;
+  transition: all 0.4s;
+}
+.pcard:hover .pcard-info { transform: translateY(0); opacity: 1; }
+.pcard-cat {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+.pcard-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem; color: var(--cream);
+}
+
+/* ═══════════════════════════════════════════
+   PROCESS
+═══════════════════════════════════════════ */
+#process {
+  padding: 8rem 0;
+  background: var(--forest);
+  clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+  padding-top: 11rem; padding-bottom: 11rem;
+}
+.process-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin-top: 5rem;
+  position: relative;
+}
+.process-steps::before {
+  content: ''; position: absolute;
+  top: 2.5rem; left: 12%; right: 12%;
+  height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+}
+.pstep { padding: 0 2rem; text-align: center; }
+.pstep-num {
+  width: 50px; height: 50px; margin: 0 auto 2rem;
+  border: 1px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem; color: var(--gold);
+  background: var(--forest); position: relative; z-index: 1;
+}
+.pstep-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.35rem; color: var(--cream);
+  margin-bottom: 0.8rem;
+}
+.pstep-desc {
+  font-size: 0.9rem; color: rgba(245,240,232,0.6); line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════
+   CTA PARALLAX
+═══════════════════════════════════════════ */
+#cta-banner {
+  position: relative; padding: 9rem 0;
+  overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.cta-bg img { filter: brightness(0.35); }
+.cta-bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(13,31,20,0.8) 0%, rgba(10,10,9,0.6) 100%);
+}
+.cta-content {
+  position: relative; z-index: 1;
+  text-align: center;
+}
+.cta-content h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 6vw, 5.5rem); color: var(--cream);
+  margin-bottom: 1.5rem; line-height: 1.08;
+}
+.cta-content h2 em { font-style: italic; color: var(--gold-light); }
+.cta-content p {
+  font-size: 1rem; color: rgba(245,240,232,0.7);
+  max-width: 480px; margin: 0 auto 3rem; line-height: 1.8;
+}
+.cta-since {
+  margin-top: 3rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.28em; color: var(--gold-dim);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact {
+  padding: 8rem 0;
+  background: var(--ink2);
+}
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 8rem; align-items: start;
+}
+.contact-left h2 { margin-bottom: 1.5rem; }
+.contact-left p {
+  font-size: 0.95rem; color: rgba(245,240,232,0.65); line-height: 1.9; margin-bottom: 3rem;
+}
+.cinfo-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.cinfo {
+  display: flex; gap: 1.2rem; align-items: flex-start;
+}
+.cinfo-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--gold);
+}
+.cinfo-text strong {
+  display: block; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.05em; color: var(--cream); margin-bottom: 0.2rem;
+}
+.cinfo-text span {
+  font-size: 0.9rem; color: var(--muted);
+}
+.form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fgroup { display: flex; flex-direction: column; gap: 0.4rem; }
+.fgroup label {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.18em; color: var(--gold-dim);
+}
+.fgroup input, .fgroup select, .fgroup textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--cream); padding: 0.9rem 1rem;
+  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 300;
+  outline: none; transition: border-color 0.3s;
+}
+.fgroup input::placeholder, .fgroup textarea::placeholder {
+  color: rgba(245,240,232,0.28);
+}
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus {
+  border-color: var(--gold);
+}
+.fgroup select option { background: var(--ink2); }
+.fgroup textarea { resize: vertical; min-height: 130px; }
+.form-submit {
+  background: var(--gold); color: var(--ink);
+  padding: 1rem 3rem; border: none; cursor: none;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.18em; font-weight: 700;
+  align-self: flex-start; transition: all 0.3s;
+}
+.form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: #060605;
+  border-top: 1px solid var(--border);
+}
+.footer-top {
+  display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 4rem; padding: 5rem 0 4rem;
+}
+.footer-brand img {
+  height: 55px; margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.25));
+}
+.footer-brand p {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.8;
+  max-width: 260px;
+}
+.footer-col h5 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.22em; color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-col ul li a {
+  font-size: 0.88rem; color: var(--muted); transition: color 0.3s;
+}
+.footer-col ul li a:hover { color: var(--gold-light); }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: 0.82rem; color: var(--muted); }
+.social-row { display: flex; gap: 0.6rem; }
+.soc {
+  width: 36px; height: 36px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; color: var(--muted); transition: all 0.3s;
+}
+.soc:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+[data-reveal] {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s var(--easing), transform 0.8s var(--easing);
+}
+[data-reveal="left"] { transform: translateX(-40px); }
+[data-reveal="right"] { transform: translateX(40px); }
+[data-reveal].in-view { opacity: 1; transform: translate(0); }
+[data-delay="1"] { transition-delay: 0.1s; }
+[data-delay="2"] { transition-delay: 0.2s; }
+[data-delay="3"] { transition-delay: 0.3s; }
+[data-delay="4"] { transition-delay: 0.4s; }
+[data-delay="5"] { transition-delay: 0.5s; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1100px){
+  #nav { padding: 1.2rem 2rem; }
+  #nav.solid { padding: 0.8rem 2rem; }
+  .wrap { padding: 0 2rem; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-image-col { min-height: 400px; }
+  .about-text-col { padding: 3rem 2rem; }
+  .projects-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 280px; }
+  .pcard:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  .pcard:nth-child(n) { grid-column: span 1; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .process-steps::before { display: none; }
+  .sp-features { grid-template-columns: 1fr; }
+  .sp-features li:nth-child(odd) { padding-right: 0; }
+}
+@media(max-width:768px){
+  .nav-links { display: none; }
+  .nav-contact { display: none; }
+  .nav-burger { display: flex; }
+  .hero-title { font-size: clamp(2.5rem, 9vw, 4rem); }
+  .services-top { flex-direction: column; gap: 1.5rem; }
+  .service-row { grid-template-columns: 60px 1fr 44px; }
+  .projects-grid { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  .pcard:nth-child(n) { grid-column: span 1; }
+  .process-steps { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-founded { display: none; }
+  .about-stats-row { gap: 1.5rem; }
+  body { cursor: auto; }
+  #cursor, #cursor-ring { display: none; }
+  .sp-header { padding: 1rem 1.5rem; }
+  .sp-hero-content { padding: 2rem 1.5rem; }
+  .sp-body { padding: 3rem 1.5rem; }
+}
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- MOBILE MENU -->
+<div id="mob-menu">
+  <button id="mob-close" onclick="closeMob()">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#process" onclick="closeMob()">Process</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- SERVICE FULL PAGE -->
+<div id="service-page">
+  <div class="sp-header">
+    <button class="sp-back" onclick="closePage()">
+      <span class="sp-back-arrow">←</span>
+      <span>Back to Services</span>
+    </button>
+    <span class="sp-breadcrumb">RANova Arte Jazeera &nbsp;/&nbsp; <span id="sp-breadcrumb-name">Services</span></span>
+    <button class="sp-close" onclick="closePage()">✕</button>
+  </div>
+  <div class="sp-hero">
+    <img id="sp-img" src="" alt="">
+    <div class="sp-hero-overlay"></div>
+    <div class="sp-hero-content">
+      <div class="sp-num" id="sp-num"></div>
+      <h1 class="sp-title" id="sp-title"></h1>
+    </div>
+  </div>
+  <div class="sp-body">
+    <p class="sp-desc" id="sp-desc1"></p>
+    <p class="sp-desc" id="sp-desc2"></p>
+    <div class="sp-divider"></div>
+    <div class="sp-features-title">WHAT'S INCLUDED</div>
+    <ul class="sp-features" id="sp-features"></ul>
+    <div class="sp-cta-row">
+      <div class="sp-cta-text">Ready to start this project with us?<br>Let's discuss your vision in detail.</div>
+      <a href="#contact" class="cta-primary" onclick="closePage()">Start This Project →</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">
+    <img src="./ah.png">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#contact" class="nav-contact">Get a Quote</a>
+    <div class="nav-burger" id="burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-media">
+    <!-- Construction & Interior Design related videos -->
+    <video autoplay muted loop playsinline id="hero-video">
+      <source src="https://www.pexels.com/download/video/10135156/" type="video/mp4">
+      <source src="https://www.pexels.com/download/video/10135156/" type="video/mp4">
+      <source src="https://www.pexels.com/download/video/10135156/" type="video/mp4">
+    </video>
+    <div class="fallback" id="hero-fallback"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay-left"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">RANova Arte Jazeera &nbsp;·&nbsp; Est. 2016</div>
+    <h1 class="hero-title">
+      Where Vision<br>Becomes <em>Space</em>
+    </h1>
+    <p class="hero-sub">Full-service construction, finishing &amp; interior design — crafted with precision, guided by artistry.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="cta-primary">Explore Our Work</a>
+      <a href="#services" class="cta-secondary">Our Services →</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="hero-founded">Est. 10 · March · 2016</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Construction &amp; Contracting</span>
+    <span class="ticker-item">Interior Design</span>
+    <span class="ticker-item">Finishing Works</span>
+    <span class="ticker-item">Space Planning</span>
+    <span class="ticker-item">Renovation &amp; Remodeling</span>
+    <span class="ticker-item">Project Management</span>
+    <span class="ticker-item">Landscape Design</span>
+    <span class="ticker-item">Construction &amp; Contracting</span>
+    <span class="ticker-item">Interior Design</span>
+    <span class="ticker-item">Finishing Works</span>
+    <span class="ticker-item">Space Planning</span>
+    <span class="ticker-item">Renovation &amp; Remodeling</span>
+    <span class="ticker-item">Project Management</span>
+    <span class="ticker-item">Landscape Design</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image-col" data-reveal="left">
+      <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=85" alt="RANova Interior Craftsmanship" loading="lazy">
+      <div class="about-image-overlay"></div>
+      <div class="about-year-badge">
+        <div class="year">2016</div>
+        <div class="year-label">Founded</div>
+      </div>
+    </div>
+    <div class="about-text-col" data-reveal="right">
+      <div class="section-label">Who We Are</div>
+      <h2 class="section-heading" style="margin-bottom:1.5rem;">
+        Beyond <em>Construction</em> —<br>We Create Experiences
+      </h2>
+      <div class="about-divider"></div>
+      <p>We are a full-service construction, finishing, and interior design company committed to delivering high-quality spaces that combine functionality, comfort, and refined aesthetics.</p>
+      <p>Our approach goes beyond traditional construction — we design and create spaces that reflect each client's vision and lifestyle. Through careful space planning and a strong attention to detail, we ensure every project achieves a perfect balance between practicality and visual appeal.</p>
+      <p>We place great emphasis on material selection, proposing finishes and solutions with a refined artistic perspective. Supported by a team of skilled designers and engineers, we provide end-to-end services from concept design to execution and final delivery.</p>
+      <div class="about-stats-row">
+        <div class="stat" data-delay="1">
+          <div class="stat-num" data-count="150"><span class="count-val">0</span><sup>+</sup></div>
+          <div class="stat-txt">Projects Done</div>
+        </div>
+        <div class="stat" data-delay="2">
+          <div class="stat-num" data-count="9"><span class="count-val">0</span><sup>+</sup></div>
+          <div class="stat-txt">Years Active</div>
+        </div>
+        <div class="stat" data-delay="3">
+          <div class="stat-num" data-count="98"><span class="count-val">0</span><sup>%</sup></div>
+          <div class="stat-txt">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="services-top">
+      <div data-reveal>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-heading">Our <em>Services</em></h2>
+      </div>
+      <div class="services-top-right" data-reveal="right">
+        Every service we offer is executed with the same unwavering commitment to quality, precision, and creative excellence that defines RANova Arte Jazeera.
+      </div>
+    </div>
+
+    <div class="services-list" data-reveal>
+      <a class="service-row" onclick="openPage('construction')">
+        <div class="service-row-num">01</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Construction &amp; Contracting</div>
+          <div class="service-row-tag">Complete build solutions · structural integrity</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('interior')">
+        <div class="service-row-num">02</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Interior Design</div>
+          <div class="service-row-tag">Bespoke environments · artistic vision</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('finishing')">
+        <div class="service-row-num">03</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Finishing Works</div>
+          <div class="service-row-tag">Premium surfaces · artisan detailing</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('space')">
+        <div class="service-row-num">04</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Space Planning</div>
+          <div class="service-row-tag">Flow · function · balance</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('renovation')">
+        <div class="service-row-num">05</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Renovation &amp; Remodeling</div>
+          <div class="service-row-tag">Transformation · restoration · renewal</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('pm')">
+        <div class="service-row-num">06</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Project Management</div>
+          <div class="service-row-tag">On time · on budget · fully coordinated</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+      <a class="service-row" onclick="openPage('landscape')">
+        <div class="service-row-num">07</div>
+        <div class="service-row-main">
+          <div class="service-row-name">Landscape Design</div>
+          <div class="service-row-tag">Outdoor living · natural harmony</div>
+        </div>
+        <div class="service-row-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="projects-header" data-reveal>
+      <div>
+        <div class="section-label">Our Portfolio</div>
+        <h2 class="section-heading">Selected <em>Work</em></h2>
+      </div>
+      <div class="projects-filter">
+        <button class="pf-btn active" data-cat="all">All</button>
+        <button class="pf-btn" data-cat="interior">Interiors</button>
+        <button class="pf-btn" data-cat="construction">Construction</button>
+        <button class="pf-btn" data-cat="landscape">Landscape</button>
+      </div>
+    </div>
+    <div class="projects-grid" data-reveal>
+      <div class="pcard" data-cat="interior">
+        <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=900&q=85" alt="Luxury Interior" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Interior Design</div>
+          <div class="pcard-name">The Emerald Penthouse</div>
+        </div>
+      </div>
+      <div class="pcard" data-cat="interior">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=85" alt="Modern Kitchen" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Interior Design</div>
+          <div class="pcard-name">Culinary Suite Renovation</div>
+        </div>
+      </div>
+      <div class="pcard" data-cat="construction">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=85" alt="Construction Project" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Contracting</div>
+          <div class="pcard-name">Al Noor Corporate Complex</div>
+        </div>
+      </div>
+      <div class="pcard" data-cat="interior">
+        <img src="https://images.unsplash.com/photo-1565182999561-18d7dc61c393?auto=format&fit=crop&w=900&q=85" alt="Bedroom Design" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Interior Design</div>
+          <div class="pcard-name">Master Suite Collection</div>
+        </div>
+      </div>
+      <div class="pcard" data-cat="landscape">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=85" alt="Landscape Project" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Landscape Design</div>
+          <div class="pcard-name">The Garden Sanctuary</div>
+        </div>
+      </div>
+      <div class="pcard" data-cat="interior">
+        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=85" alt="Contemporary Interior" loading="lazy">
+        <div class="pcard-overlay"></div>
+        <div class="pcard-info">
+          <div class="pcard-cat">Interior &amp; Finishing</div>
+          <div class="pcard-name">Contemporary Residence</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div style="text-align:center;" data-reveal>
+      <div class="section-label" style="justify-content:center;">How We Work</div>
+      <h2 class="section-heading">Our <em>Process</em></h2>
+    </div>
+    <div class="process-steps">
+      <div class="pstep" data-reveal data-delay="1">
+        <div class="pstep-num">01</div>
+        <div class="pstep-title">Discovery</div>
+        <p class="pstep-desc">We listen deeply to understand your vision, requirements, lifestyle, and aspirations before a single line is drawn.</p>
+      </div>
+      <div class="pstep" data-reveal data-delay="2">
+        <div class="pstep-num">02</div>
+        <div class="pstep-title">Design</div>
+        <p class="pstep-desc">Our designers craft bespoke concepts — presented with 3D visualizations, material boards, and detailed plans.</p>
+      </div>
+      <div class="pstep" data-reveal data-delay="3">
+        <div class="pstep-num">03</div>
+        <div class="pstep-title">Execution</div>
+        <p class="pstep-desc">Skilled craftsmen and engineers bring the design to life, with rigorous quality control at every stage.</p>
+      </div>
+      <div class="pstep" data-reveal data-delay="4">
+        <div class="pstep-num">04</div>
+        <div class="pstep-title">Delivery</div>
+        <p class="pstep-desc">A meticulous final walkthrough, punch-list completion, and handover of your extraordinary new space.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA PARALLAX -->
+<section id="cta-banner">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=80" alt="Luxury Space" loading="lazy">
+    <div class="cta-bg-overlay"></div>
+  </div>
+  <div class="wrap cta-content" data-reveal>
+    <h2>Ready to <em>Transform</em><br>Your Space?</h2>
+    <p>From the first consultation to the final handover, we guide you through every step with expertise, creativity, and absolute dedication to your vision.</p>
+    <a href="#contact" class="cta-primary" style="display:inline-flex;">Start Your Project →</a>
+    <div class="cta-since">RANova Arte Jazeera · Est. 10 March 2016</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-left" data-reveal="left">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-heading">Let's Build<br>Something <em>Remarkable</em></h2>
+        <p>Whether you have a detailed brief or simply a dream, we'd love to hear from you. Our team is ready to turn your vision into reality.</p>
+        <div class="cinfo-list">
+          <div class="cinfo">
+            <div class="cinfo-icon">✉</div>
+            <div class="cinfo-text">
+              <strong>Email Us</strong>
+              <span>info@ranova-arte.com</span>
+            </div>
+          </div>
+          <div class="cinfo">
+            <div class="cinfo-icon">✆</div>
+            <div class="cinfo-text">
+              <strong>Call Us</strong>
+              <span>+20 100 000 0000</span>
+            </div>
+          </div>
+          <div class="cinfo">
+            <div class="cinfo-icon">◎</div>
+            <div class="cinfo-text">
+              <strong>Studio Location</strong>
+              <span>Mansoura, Dakahlia, Egypt</span>
+            </div>
+          </div>
+          <div class="cinfo">
+            <div class="cinfo-icon">◷</div>
+            <div class="cinfo-text">
+              <strong>Working Hours</strong>
+              <span>Sunday – Thursday &nbsp;|&nbsp; 9:00 – 18:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right" data-reveal="right">
+        <div class="form">
+          <div class="form-row">
+            <div class="fgroup">
+              <label>First Name</label>
+              <input type="text" placeholder="Your name">
+            </div>
+            <div class="fgroup">
+              <label>Last Name</label>
+              <input type="text" placeholder="Family name">
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+          <div class="fgroup">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+20 ...">
+          </div>
+          <div class="fgroup">
+            <label>Service Required</label>
+            <select>
+              <option value="">Select a service...</option>
+              <option>Construction &amp; Contracting</option>
+              <option>Interior Design</option>
+              <option>Finishing Works</option>
+              <option>Space Planning</option>
+              <option>Renovation &amp; Remodeling</option>
+              <option>Project Management</option>
+              <option>Landscape Design</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label>Project Details</label>
+            <textarea placeholder="Tell us about your project, space, timeline and vision..."></textarea>
+          </div>
+          <button class="form-submit" id="form-submit">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="./ah.png" alt="RANova Arte Jazeera" style="height:55px;width:auto;object-fit:contain;filter:drop-shadow(0 0 8px rgba(201,168,76,0.25));margin-bottom:1.5rem;">
+        <p>A full-service construction, finishing &amp; interior design company delivering spaces that combine functionality, comfort, and refined aesthetics.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#" onclick="openPage('construction');return false;">Construction</a></li>
+          <li><a href="#" onclick="openPage('interior');return false;">Interior Design</a></li>
+          <li><a href="#" onclick="openPage('finishing');return false;">Finishing Works</a></li>
+          <li><a href="#" onclick="openPage('space');return false;">Space Planning</a></li>
+          <li><a href="#" onclick="openPage('renovation');return false;">Renovation</a></li>
+          <li><a href="#" onclick="openPage('pm');return false;">Project Management</a></li>
+          <li><a href="#" onclick="openPage('landscape');return false;">Landscape</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#projects">Portfolio</a></li>
+          <li><a href="#process">Our Process</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Behance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 RANova Arte Jazeera. All Rights Reserved.</p>
+      <div class="social-row">
+        <a href="#" class="soc">in</a>
+        <a href="#" class="soc">f</a>
+        <a href="#" class="soc">ig</a>
+        <a href="#" class="soc">wa</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── CURSOR ─── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx+'px'; cur.style.top = my+'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.14;
+  ry += (my - ry) * 0.14;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.service-row,.pcard,.pf-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.width = '60px'; ring.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.width = '40px'; ring.style.height = '40px';
+  });
+});
+
+/* ─── NAV ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60));
+
+/* ─── MOBILE MENU ─── */
+function toggleMob() { document.getElementById('mob-menu').classList.toggle('open'); }
+function closeMob() { document.getElementById('mob-menu').classList.remove('open'); }
+
+/* ─── HERO VIDEO FALLBACK ─── */
+const hv = document.getElementById('hero-video');
+hv.addEventListener('error', () => {
+  hv.style.display='none';
+  document.getElementById('hero-fallback').style.display='block';
+});
+setTimeout(() => {
+  if(hv.readyState === 0) {
+    hv.style.display='none';
+    document.getElementById('hero-fallback').style.display='block';
+  }
+}, 4000);
+
+/* ─── SERVICES DATA ─── */
+const serviceData = {
+  construction: {
+    num: '01 — Construction',
+    title: 'Construction & Contracting',
+    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Our contracting division delivers complete construction projects with a commitment to structural integrity, timeline adherence, and uncompromising quality. From initial groundbreaking to final handover, experienced teams manage every facet of the build.',
+    d2: 'We work with premium materials and trusted subcontractors, applying rigorous quality control at every stage.',
+    features: ['New construction & commercial build-outs','Structural renovation & restoration','MEP coordination & oversight','Site management & safety compliance','Subcontractor coordination','Quality assurance & final inspection']
+  },
+  interior: {
+    num: '02 — Design',
+    title: 'Interior Design',
+    img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Interior design at RANova Arte Jazeera is more than decoration — it is the art of sculpting atmosphere, emotion, and function into a unified whole. Our designers bring expertise in both classical and contemporary aesthetics.',
+    d2: 'We collaborate closely with craftsmen and specialists to create interiors that are not only visually stunning but profoundly livable.',
+    features: ['Custom furniture design & procurement','Lighting design & ambiance planning','Material & finish selection','3D visualization & presentations','Art curation & styling','Residential & commercial interiors']
+  },
+  finishing: {
+    num: '03 — Finishing',
+    title: 'Finishing Works',
+    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=90',
+    d1: 'The difference between a good space and an extraordinary one lies in the finishing. Our artisan finishing teams execute every surface treatment with a level of care and precision that transforms buildings into refined environments.',
+    d2: 'We source premium materials globally, ensuring every finish reflects the quality our clients deserve.',
+    features: ['Decorative plaster & Venetian stucco','Custom millwork & carpentry','Marble & stone installation','Premium flooring solutions','Bespoke ceiling systems & cornices','Specialty wall treatments & paint']
+  },
+  space: {
+    num: '04 — Planning',
+    title: 'Space Planning',
+    img: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Effective space planning is the foundation of any successful interior project. Our spatial strategists analyze your needs, lifestyle, and functional requirements to develop layouts that feel instinctively right.',
+    d2: 'Whether optimizing a compact apartment or orchestrating a vast commercial floor plate, every square meter serves a meaningful purpose.',
+    features: ['Functional requirement analysis','Traffic flow & circulation planning','Furniture layout & zone planning','2D & 3D spatial modeling','Acoustic & privacy zoning','Code compliance review']
+  },
+  renovation: {
+    num: '05 — Renovation',
+    title: 'Renovation & Remodeling',
+    img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Renovation is the art of renewal — preserving what is valuable while transforming what needs to evolve. Our renovation team handles projects of every scale, from single-room refreshes to complete building overhauls.',
+    d2: 'We manage the complexity of working within existing structures with precision and minimal disruption to your daily life.',
+    features: ['Full home & apartment renovations','Kitchen & bathroom remodeling','Heritage restoration & retrofitting','Structural modifications','Phased renovation planning','Turnkey delivery']
+  },
+  pm: {
+    num: '06 — Management',
+    title: 'Project Management',
+    img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Delivering a complex project on time, on budget, and to the highest quality standard requires exceptional orchestration. Our project managers serve as your single point of accountability throughout the entire lifecycle.',
+    d2: 'We use proven methodologies and digital tools to maintain full transparency and keep every stakeholder informed.',
+    features: ['Master schedule development','Budget management & cost control','Contractor & vendor coordination','Weekly progress reporting','Risk identification & mitigation','Handover & closeout documentation']
+  },
+  landscape: {
+    num: '07 — Landscape',
+    title: 'Landscape Design',
+    img: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1600&q=90',
+    d1: 'Landscape design extends the beauty and functionality of your space into the natural world. Our landscape team creates outdoor environments that are both aesthetically stunning and ecologically harmonious.',
+    d2: 'From private garden retreats to expansive commercial grounds, we bring the same artistry and precision to every outdoor project.',
+    features: ['Garden & courtyard design','Outdoor living areas & terraces','Water features & irrigation','Plant selection & landscaping','Lighting design for outdoor spaces','Hardscape & softscape integration']
+  }
+};
+
+/* ─── SERVICE FULL PAGE ─── */
+function openPage(id) {
+  const d = serviceData[id];
+  if (!d) return;
+
+  document.getElementById('sp-num').textContent = d.num;
+  document.getElementById('sp-title').textContent = d.title;
+  document.getElementById('sp-img').src = d.img;
+  document.getElementById('sp-img').alt = d.title;
+  document.getElementById('sp-desc1').textContent = d.d1;
+  document.getElementById('sp-desc2').textContent = d.d2;
+  document.getElementById('sp-breadcrumb-name').textContent = d.title;
+
+  const ul = document.getElementById('sp-features');
+  ul.innerHTML = d.features.map(f => `<li>${f}</li>`).join('');
+
+  const page = document.getElementById('service-page');
+  page.classList.add('open');
+  page.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closePage() {
+  document.getElementById('service-page').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close with Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePage();
+});
+
+/* ─── PROJECTS FILTER ─── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const cat = this.dataset.cat;
+    document.querySelectorAll('.pcard').forEach(c => {
+      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none';
+    });
+  });
+});
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+/* ─── COUNTER ANIMATION ─── */
+function animCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const valEl = el.querySelector('.count-val');
+  if (!valEl) return;
+  let start = 0;
+  const dur = 1800;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / dur, 1);
+    valEl.textContent = Math.floor(progress * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else valEl.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      animCounter(e.target);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+/* ─── PARALLAX CTA ─── */
+const ctaBg = document.querySelector('.cta-bg img');
+window.addEventListener('scroll', () => {
+  const cta = document.getElementById('cta-banner');
+  if (!cta || !ctaBg) return;
+  const rect = cta.getBoundingClientRect();
+  const pct = (window.innerHeight - rect.top) / (window.innerHeight + cta.offsetHeight);
+  ctaBg.style.transform = `translateY(${(pct - 0.5) * 60}px)`;
+});
+
+/* ─── FORM ─── */
+document.getElementById('form-submit').addEventListener('click', function() {
+  this.textContent = '✓ Message Sent';
+  this.style.background = '#2d5a3d';
+  setTimeout(() => {
+    this.textContent = 'Send Message →';
+    this.style.background = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>
